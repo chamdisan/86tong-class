@@ -11,7 +11,7 @@ const { WebSocketServer } = require("ws");
 const PORT = Number(process.env.PORT || 8080);
 const MAX_PER_ROOM = 40;
 const GREETINGS = new Set(["你好！", "谢谢！", "加油！", "再见！"]);
-const COLORS = new Set(["#7a2e1f", "#2e5a7a", "#5a7a2e", "#7a5a2e", "#5a2e7a", "#2e7a6b"]);
+const COLORS = new Set(["#D9482B", "#1F7A64", "#3B5BDB", "#E9A13B", "#9B4D8F", "#0E7C86", "#E86A6A", "#4A90A4"]);
 
 const rooms = new Map(); // roomName -> Map(id -> player)
 let nextId = 1;
@@ -77,7 +77,7 @@ wss.on("connection", (ws) => {
       player = {
         id: nextId++, ws, room,
         name: cleanName(msg.name),
-        color: COLORS.has(msg.color) ? msg.color : "#7a2e1f",
+        color: COLORS.has(msg.color) ? msg.color : "#D9482B",
         x: clamp(msg.x, 60, 900), y: clamp(msg.y, 210, 500),
         sitting: false,
       };
