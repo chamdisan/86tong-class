@@ -1,0 +1,1 @@
+{"dependencies":{"ws":"^8.18.0"},"description":"May chu WebSocket cho phong hoc chung 86tong.com — khong tai khoan, khong chat tu do","main":"server.js","name":"86tong-phong-hoc-chung","scripts":{"start":"node server.js"},"version":"1.0.0"}
