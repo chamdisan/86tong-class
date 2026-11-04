@@ -200,6 +200,16 @@ wss.on("connection", (ws) => {
     } else if (msg.type === "greet") {
       if (!GREETINGS.has(msg.text)) return;
       broadcast(player.room, { type: "player-greet", id: player.id, text: msg.text }, player.id);
+    } else if (msg.type === "rename") {
+      // v4.1: rename the SAME player in place — never create a second avatar.
+      // This is what the fixed frontend sends on Đổi tên; the old frontend
+      // reconnected instead, which is how one student became two.
+      player.name = cleanName(msg.name);
+      player.color = COLORS.has(msg.color) ? msg.color : player.color;
+      const game = games.get(player.room);
+      if (game && game.scores.has(player.id)) game.scores.get(player.id).name = player.name;
+      broadcast(player.room, { type: "player-renamed", id: player.id, name: player.name, color: player.color }, player.id);
+      if (game && game.active) broadcastScores(player.room, game);
     } else if (msg.type === "react") {
       if (!REACTIONS.has(msg.emoji)) return;
       broadcast(player.room, { type: "player-react", id: player.id, emoji: msg.emoji }, player.id);
